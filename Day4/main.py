@@ -18,16 +18,39 @@ combined_data.append(buffer_) #forgot about last one
 def check_passport(passport):
   for word in valid:
     if(passport.find(word)==-1):
-      print(passport.find(word))
-      return 0
-  return 1
+      return False
+  return True
+def check_data(array):
+  for entry in array:
+    if(entry[0] == valid[0]): #byr
+      if(int(entry[1])< 1920 or int(entry[1]) > 2002):
+        return False
+    else if(entry[0] == valid[1]): #iyr
+      if(int(entry[1])< 2010 or int(entry[1]) > 2020):
+        return False
+    else if(entry[0] == valid[2]): #eyr
+      if(int(entry[1])< 2020 or int(entry[1]) > 2030):
+        return False
+    else if(entry[0] == valid[3]): #hgt
+      if(entry[1].find('cm') != -1):
+        convert = int(entry[1][:-2])
+    else if(entry[0] == valid[4]): #hcl
 
+    else if(entry[0] == valid[5]): #ecl
 
-valid_count=0
+    else if(entry[0] == valid[6]): #pid
+
+    else:
+      print("Fake News")
+
+#valid_count=0
+valid_passports=[]
 for passport in combined_data:
-  print(passport)
-  valid_count+=check_passport(passport)
-  print(f'<-----{valid_count}------>')
-       
-print(valid_count)
+  if(check_passport(passport)):
+       valid_passports.append(passport)
 
+# Fucking unncessacry in my opinion but it works
+valid_passports = [x.replace('\n',' ') for x in valid_passports]
+valid_passports = [x.split() for x in valid_passports]
+valid_passports = [[y.split(':') for y in x] for x in valid_passports]
+#valid_passports = [valid_passports.remove(passports) if(check_data(passports)==False) for passports in valid_passports]
