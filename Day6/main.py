@@ -11,13 +11,20 @@ for line in data:
     else:
         temp += line
 sorted_data.append(temp)
-sorted_data = [x.replace('\n','') for x in sorted_data]
+sorted_data = [x.split('\n') for x in sorted_data]
 def counter(entry):
     count = set()
     for letter in entry:
-        count.add(letter)
-    return len(count)
-counts= 0
+        if letter != '':
+            count.add(letter)
+    return count
+total_count=[]
+count_it=0
 for line in sorted_data:
-    counts+=counter(line)
-print(counts)
+    for entry in line:
+        if(entry != ''):
+            total_count.append(counter(entry))
+    print(f'INTERSECTION = {set.intersection(*total_count)} SET = {total_count}')
+    count_it+=len(set.intersection(*total_count))
+    total_count=[]
+    print(f'<-------{count_it}------>')
